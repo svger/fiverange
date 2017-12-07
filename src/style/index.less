@@ -1,0 +1,133 @@
+@import '../../node_modules/@cefc-ui/style/src/mixins/utils.less';
+@import '../../@{theme}';
+
+@cellPrefixCls: cefc-cell;
+@space: .15rem;
+
+.@{cellPrefixCls} {
+  margin-bottom: @v-spacing-lg;
+
+  &-inner {
+    position: relative;
+  }
+
+  &-title {
+    padding: 0 @v-spacing-lg @h-spacing-sm;
+    font-size: @font-size-base;
+    color: @color-text-base;
+    background: transparent;
+    position: relative;
+
+    &:after {
+      .border(1px, @border-color-base, .5);
+    }
+  }
+
+  &-item {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    overflow: hidden;
+    padding-left: @h-spacing-lg;
+    background-color: @fill-base;
+
+    &:after {
+      .border(1px, @border-color-base, .5);
+    }
+  
+    &:not(:last-child):after {
+      margin-left: @h-spacing-lg;
+    }
+  }
+
+  &-left, &-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &-left {
+    color: @color-text-secondary;
+    font-size: @font-size-base;
+    white-space: nowrap;
+  }
+
+  &-right {
+    flex: 1;
+    width: 100%;
+    min-height: .44rem;
+    text-align: right;
+    padding-right: @h-spacing-lg;
+    justify-content: flex-end;
+  }
+
+  &-icon {
+    margin-right: @h-spacing-lg;
+  }
+
+  &-arrow:after {
+    display: block;
+    content: '';
+    width: .1rem;
+    height: .1rem;
+    border-right: 1px solid @border-color-base;
+    border-top: 1px solid @border-color-base;
+    transform: rotate(45deg);
+    transform-origin: .05rem .05rem;
+    margin-left: .1rem;
+  }
+}
+
+// .cellItem {
+//   display: flex;
+//   flex-direction: row;
+//   position: relative;
+//   overflow: hidden;
+//   padding-left: @h-spacing-lg;
+//   background-color: @fill-base;
+
+//   &:after {
+//     .border(1px, @border-bg-color, .5);
+//   }
+
+//   &:not(:last-child):after {
+//     margin-left: .15rem;
+//   }
+// }
+
+// .cellLeft, .cellRight {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+// }
+
+// .cellLeft {
+//   color: @body-font-color-dark-gray;
+//   font-size: @font-size-big;
+//   white-space: nowrap;
+// }
+
+// .cellRight {
+//   flex: 1;
+//   width: 100%;
+//   min-height: .44rem;
+//   text-align: right;
+//   padding-right: @space;
+//   justify-content: flex-end;
+// }
+
+// .cellIcon {
+//   margin-right: @space;
+// }
+
+// .cellArrow:after {
+//   display: block;
+//   content: '';
+//   width: .1rem;
+//   height: .1rem;
+//   border-right: 1px solid @border-bg-color;
+//   border-top: 1px solid @border-bg-color;
+//   transform: rotate(45deg);
+//   transform-origin: .05rem .05rem;
+//   margin-left: .1rem;
+// }
