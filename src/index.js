@@ -112,13 +112,15 @@ class BidPrice extends Component {
   }
 
   getPriceFontColor(preClosePrice, price) {
+    const { prefixCls } = this.props;
+
     if (price === DEAFAULT_VALUE) {
       return '';
     }
 
     return cns({
-      [`ft-green`]: parseFloat(preClosePrice) > parseFloat(price),
-      [`ft-red`]: parseFloat(preClosePrice) < parseFloat(price),
+      [`${prefixCls}-ft--green`]: parseFloat(preClosePrice) > parseFloat(price),
+      [`${prefixCls}-ft--red`]: parseFloat(preClosePrice) < parseFloat(price),
     });
   }
 
@@ -149,14 +151,14 @@ class BidPrice extends Component {
   }
 
   renderBidPriceInfo(priceInfo, name) {
-    const { staticData, precision } = this.props;
+    const { staticData, precision, prefixCls } = this.props;
     const preClosePrice = !isEmpty(staticData) ? decimalFormat(staticData.preClosePrice, precision) : '';
     const priceInfoCopy = [...priceInfo];
     const clsName = cns({
-      noInfo: isEmpty(this.state.bidPriceInfo),
-      bidPriceInfo: true,
-      bidPriceInfo_buy: name === BID_TYPE.BUY.TEXT,
-      bidPriceInfo_sell: name === BID_TYPE.SELL.TEXT
+      [`${prefixCls}-noInfo`]: isEmpty(this.state.bidPriceInfo),
+      [`${prefixCls}-bidPriceInfo`]: true,
+      [`${prefixCls}-bidPriceInfo--buy`]: name === BID_TYPE.BUY.TEXT,
+      [`${prefixCls}-bidPriceInfo--sell`]: name === BID_TYPE.SELL.TEXT
     });
 
     if (name === BID_TYPE.SELL.TEXT) {
@@ -164,7 +166,7 @@ class BidPrice extends Component {
     }
 
     return (
-      <ul styleName={clsName}>
+      <ul className={clsName}>
         {
           priceInfoCopy.map((info, index) => {
             const key = `${name}${index}`;
@@ -184,11 +186,11 @@ class BidPrice extends Component {
 
             return (
               <li key={key} onClick={this.handlePriceClick(price)} >
-                <span styleName="price-1">{key}</span>
-                <span styleName={`price-2 equal-price ${this.getPriceFontColor(preClosePrice, price)}`} >
+                <span className={`${prefixCls}-price--1`}>{key}</span>
+                <span className={`${prefixCls}-price--2 ${prefixCls}-equal_price ${this.getPriceFontColor(preClosePrice, price)}`} >
                   {price}
                 </span>
-                <span styleName="price-3">{amount}</span>
+                <span className={`${prefixCls}-price--3`}>{amount}</span>
               </li>
             );
           })
@@ -199,9 +201,10 @@ class BidPrice extends Component {
 
   render() {
     const { bidPriceInfo } = this.state;
+    const { prefixCls } = this.props;
 
     return (
-      <section>
+      <section styleName={prefixCls}>
         {this.renderBidPriceInfo(bidPriceInfo.sell || this.defaultPriceInfo.sell, BID_TYPE.SELL.TEXT)}
         {this.renderBidPriceInfo(bidPriceInfo.buy || this.defaultPriceInfo.buy, BID_TYPE.BUY.TEXT)}
       </section>
@@ -210,20 +213,22 @@ class BidPrice extends Component {
 }
 
 BidPrice.propTypes = {
-  precision: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),     //数据精度
-  handCount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),     //数据一手的单位
-  socketData: PropTypes.object,                                             //股票的推送数据
-  staticData: PropTypes.object,                                             //股票基本信息数据
-  onGetPrice: PropTypes.func,                                               //点击五档价格后的回调处理函数,
-  clearValue: PropTypes.bool,                                               //是否清空五档数据
-  formatConfig: PropTypes.object,                                           //精度配置
+  precision: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),     // 数据精度
+  handCount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),     // 数据一手的单位
+  socketData: PropTypes.object,                                             // 股票的推送数据
+  staticData: PropTypes.object,                                             // 股票基本信息数据
+  onGetPrice: PropTypes.func,                                               // 点击五档价格后的回调处理函数,
+  clearValue: PropTypes.bool,                                               // 是否清空五档数据
+  formatConfig: PropTypes.object,                                           // 精度配置
+  prefixCls: PropTypes.string                                               // 组件样式前缀
 };
 
 BidPrice.defaultProps = {
   onGetPrice: () => {},
   clearValue: false,
   precision: 2,
-  handCount: 100
+  handCount: 100,
+  prefixCls: defaultPrefixCls
 };
 
 export default BidPrice;
